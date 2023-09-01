@@ -123,7 +123,7 @@ describe("Given I am connected as an employee", () => {
         expect(errorMsg).toHaveStyle({ display: "block" });
         expect(newBill.fileName).toBeNull();
         expect(consoleSpy).toHaveBeenCalledWith(
-          "Mauvais format de fichier Format accepté: JPEG, JPG, PNG"
+          "Mauvais format de fichier. Format accepté: JPEG, JPG, PNG"
         );
       });
 
