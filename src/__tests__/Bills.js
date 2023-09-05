@@ -94,3 +94,81 @@ describe("When I'm on the bills page", () => {
     });
   });
 });
+
+//Test d'intégration pour les requêtes GET
+describe("Since I am a user logged in as an employee", () => {
+  // Constantes pour les codes d'erreur
+  const ERROR_404 = 404;
+  const ERROR_500 = 500;
+
+  // Configuration initiale avant tous les tests
+  beforeAll(() => {
+    // Mock de l'objet localStorage du navigateur
+    Object.defineProperty(window, "localStorage", {
+      value: localStorageMock,
+    });
+    // Ajout d'un utilisateur mocké à localStorage
+    window.localStorage.setItem(
+      "user",
+      JSON.stringify({ type: "Employee", email: "a@a" })
+    );
+    // Création d'un élément div avec id "root" et ajout au corps du document
+    const root = document.createElement("div");
+    root.setAttribute("id", "root");
+    document.body.appendChild(root);
+    // Initialisation du routeur
+    router();
+  });
+
+  // Fonction pour simuler une erreur d'API
+  const mockApiError = (errorCode) => {
+    // Simuler une erreur lors de la récupération des factures
+    mockStore.bills.list = jest
+      .fn()
+      .mockRejectedValue(new Error(`Erreur ${errorCode}`));
+    // Navigation vers la page des factures
+    window.onNavigate(ROUTES_PATH.Bills);
+    // Remplissage du contenu de la page avec un message d'erreur
+    document.body.innerHTML = BillsUI({ error: `Erreur ${errorCode}` });
+  };
+
+  // Groupe de tests pour la navigation vers la page des factures
+  describe("When I navigate to the invoices page", () => {
+    // Test pour vérifier la récupération des factures via l'API mocké
+    test("Then retrieval of invoices via API mocked in GET", async () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+      // Création d'un nouvel objet Bills avec les dépendances mockées
+      const mockedBills = new Bills({
+        document,
+        onNavigate,
+        store: mockStore,
+        localStorage: window.localStorage,
+      });
+      // Récupération des factures
+      const bills = await mockedBills.getBills();
+      // Vérification que la liste des factures n'est pas vide
+      expect(bills.length != 0).toBeTruthy();
+    });
+
+    // Groupe de tests pour gérer les erreurs de l'API
+    describe("When an error occurs on the API", () => {
+      // Test pour simuler et vérifier une erreur 404 de l'API
+      test(`Then retrieving invoices from an API and failing with error message ${ERROR_404}`, async () => {
+        mockApiError(ERROR_404);
+        await new Promise(process.nextTick);
+        const message = await screen.getByText(/Erreur 404/);
+        expect(message).toBeTruthy();
+      });
+
+      // Test pour simuler et vérifier une erreur 500 de l'API
+      test(`Then retrieving messages from an API and failing with error message ${ERROR_500}`, async () => {
+        mockApiError(ERROR_500);
+        await new Promise(process.nextTick);
+        const message = await screen.getByText(/Erreur 500/);
+        expect(message).toBeTruthy();
+      });
+    });
+  });
+});
