@@ -63,8 +63,6 @@ describe("When I'm on the bills page", () => {
     new Bills({
       document,
       onNavigate,
-      store: mockStore,
-      localStorage: window.localStorage,
     });
   });
 
