@@ -49,9 +49,6 @@ describe("Given I am connected as an employee", () => {
       test("Then the file manager should be triggered", async () => {
         const newBill = new NewBill({
           document,
-          onNavigate,
-          store,
-          localStorage,
         });
 
         document.body.innerHTML = NewBillUI();
@@ -71,13 +68,10 @@ describe("Given I am connected as an employee", () => {
         expect(handleChangeFile).toHaveBeenCalled();
       });
 
-      // Test pour vérifier si le fichier avec le bon type est upload.
+      // Test pour vérifier si un fichier avec le bon type est upload.
       test("Then the file with the correct type should be upload", async () => {
         const newBill = new NewBill({
           document,
-          onNavigate,
-          store,
-          localStorage,
         });
 
         document.body.innerHTML = NewBillUI();
@@ -100,13 +94,10 @@ describe("Given I am connected as an employee", () => {
         expect(newBill.fileName).toBe("file.jpg");
       });
 
-      // Test pour vérifier si les fichiers avec un type différent de jpg, jpeg ou png doivent entraîner l'affichage d'un message d'erreur.
+      // Test pour vérifier si les fichiers avec d'un type différent de jpg, jpeg ou png entraîne l'affichage d'un message d'erreur.
       test("Then files with a different type of jpg, jpeg or png should result in an error message", async () => {
         const newBill = new NewBill({
           document,
-          onNavigate,
-          store,
-          localStorage,
         });
 
         document.body.innerHTML = NewBillUI();
@@ -186,8 +177,6 @@ describe("Given I am connected as an employee", () => {
         const newBill = new NewBill({
           document,
           onNavigate,
-          store: mockStore,
-          localStorage,
         });
 
         const handleSubmitSpy = jest.spyOn(newBill, "handleSubmit");
@@ -226,7 +215,7 @@ describe("When I navigate to Dashboard employee", () => {
         pct: 20,
       };
 
-      const postBills = await mockStore.bills().update(bill); // Mise à jour de la facture via le mock
+      const postBills = await mockStore.bills().update(bill); // Mise à jour de la facture
 
       expect(postSpy).toHaveBeenCalled(); // Vérifie que la méthode a été appelée
       expect(postBills).toStrictEqual(bill); // Vérifie que la facture renvoyée est identique à celle créée
@@ -258,7 +247,6 @@ describe("When I navigate to Dashboard employee", () => {
           document,
           onNavigate,
           store,
-          localStorage,
         });
 
         const form = screen.getByTestId("form-new-bill");
@@ -282,7 +270,6 @@ describe("When I navigate to Dashboard employee", () => {
           document,
           onNavigate,
           store,
-          localStorage,
         });
 
         const form = screen.getByTestId("form-new-bill");
