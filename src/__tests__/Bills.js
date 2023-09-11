@@ -50,7 +50,7 @@ describe("Given I am connected as an employee", () => {
 });
 
 // Tests pour la page des factures
-describe("When I'm on the bills page", () => {
+describe("Given I'm on the bills page", () => {
   // Initialisation avant chaque test
   beforeEach(() => {
     //fonction de navigation vers une autre page
@@ -94,7 +94,7 @@ describe("When I'm on the bills page", () => {
 });
 
 //Test d'intégration pour les requêtes GET
-describe("Since I am a user logged in as an employee", () => {
+describe("Given I am a user logged in as an employee", () => {
   // Constantes pour les codes d'erreur
   const ERROR_404 = 404;
   const ERROR_500 = 500;
