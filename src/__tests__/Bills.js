@@ -131,7 +131,7 @@ describe("Since I am a user logged in as an employee", () => {
   };
 
   // Groupe de tests pour la navigation vers la page des factures
-  describe("When I navigate to the invoices page", () => {
+  describe("When I navigate to the Bills page", () => {
     // Test pour vérifier la récupération des factures via l'API mocké
     test("Then retrieval of invoices via API mocked in GET", async () => {
       const onNavigate = (pathname) => {
@@ -142,7 +142,6 @@ describe("Since I am a user logged in as an employee", () => {
         document,
         onNavigate,
         store: mockStore,
-        localStorage: window.localStorage,
       });
       // Récupération des factures
       const bills = await mockedBills.getBills();
