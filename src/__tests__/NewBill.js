@@ -194,8 +194,8 @@ describe("Given I am connected as an employee", () => {
 });
 
 // Tests d'ajout et de gestion d'erreurs pour les factures via l'API pour un employé
-describe("When I navigate to Dashboard employee", () => {
-  describe("Given I am a user connected as Employee, and a user post a newBill", () => {
+describe("Given I navigate to Dashboard employee", () => {
+  describe("When I am a user connected as Employee, and a user post a newBill", () => {
     test("Then add a bill from mock API POST", async () => {
       const postSpy = jest.spyOn(mockStore, "bills"); // Espionne l'appel de la méthode "bills" du mockStore
 
