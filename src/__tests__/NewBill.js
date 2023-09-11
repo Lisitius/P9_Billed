@@ -10,9 +10,9 @@ import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
 import userEvent from "@testing-library/user-event";
-import store from "../__mocks__/store.js";
 import "@testing-library/jest-dom/extend-expect";
 
+// Tests d'interaction et de validation sur la page 'NewBill' pour un employé
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
@@ -94,7 +94,7 @@ describe("Given I am connected as an employee", () => {
         expect(newBill.fileName).toBe("file.jpg");
       });
 
-      // Test pour vérifier si les fichiers avec d'un type différent de jpg, jpeg ou png entraîne l'affichage d'un message d'erreur.
+      // Test pour vérifier si les fichiers avec un type différent de jpg, jpeg ou png entraîne l'affichage d'un message d'erreur.
       test("Then files with a different type of jpg, jpeg or png should result in an error message", async () => {
         const newBill = new NewBill({
           document,
@@ -118,6 +118,7 @@ describe("Given I am connected as an employee", () => {
         );
       });
 
+      // Test de soumission d'une nouvelle facture et redirection vers "Bills"
       test("Submitting a correct form should call handleSubmit method and redirect user on Bill page", async () => {
         const formNewBill = screen.getByTestId("form-new-bill");
         const inputExpenseType = screen.getByTestId("expense-type");
@@ -192,6 +193,7 @@ describe("Given I am connected as an employee", () => {
   });
 });
 
+// Tests d'ajout et de gestion d'erreurs pour les factures via l'API pour un employé
 describe("When I navigate to Dashboard employee", () => {
   describe("Given I am a user connected as Employee, and a user post a newBill", () => {
     test("Then add a bill from mock API POST", async () => {
